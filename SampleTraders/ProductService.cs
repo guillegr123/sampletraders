@@ -78,27 +78,29 @@ namespace SampleTraders
     public class ProductService : Service
     {
         /// <summary>
-        /// GET /movies
+        /// GET /products
         /// GET /movies/genres/{Genre}
         /// </summary>
-        public object Get(Products request)
+        public List<Product> Get(Products request)
         {
-            return new ProductsResponse
-            {
-                Products = String.IsNullOrEmpty(request.Vendor)
-                    ? Global.StaticMovieCatalog.GetAll()
-                    : Global.StaticMovieCatalog.GetByVendor(request.Vendor)
-            };
+            //return new ProductsResponse
+            //{
+            //    Products = String.IsNullOrEmpty(request.Vendor)
+            //        ? Global.StaticMovieCatalog.GetAll()
+            //        : Global.StaticMovieCatalog.GetByVendor(request.Vendor)
+            //};
+
+            return Global.StaticMovieCatalog.GetAll();
         }
 
         /// <summary>
         /// GET /movies/{Id}
         /// </summary>
-        public ProductResponse Get(Product movie)
+        public ProductResponse Get(Product product)
         {
             return new ProductResponse
             {
-                Product = Global.StaticMovieCatalog.GetById(movie.Id),
+                Product = Global.StaticMovieCatalog.GetById(product.Id),
             };
         }
 
@@ -109,38 +111,40 @@ namespace SampleTraders
         /// Location: http://localhost/ServiceStack.MovieRest/movies/{newMovieId}
         /// {newMovie DTO in [xml|json|jsv|etc]}
         /// </summary>
-        public object Post(Product movie)
+        public /*object*/ Product Post(Product product)
         {
-            Global.StaticMovieCatalog.Save(movie);
-            var newMovieId = movie.Id;
+            Global.StaticMovieCatalog.Save(product);
+            //var newMovieId = movie.Id;
 
-            var newMovie = new ProductResponse
-            {
-                Product = Global.StaticMovieCatalog.GetById(newMovieId),
-            };
+            //var newMovie = new ProductResponse
+            //{
+            //    Product = Global.StaticMovieCatalog.GetById(newMovieId),
+            //};
 
-            return new HttpResult(newMovie)
-            {
-                StatusCode = HttpStatusCode.Created,
-                Headers = {
-                    {HttpHeaders.Location, base.Request.AbsoluteUri.CombineWith(newMovieId.ToString())}
-                }
-            };
+            return product;
+
+            //return new HttpResult(newMovie)
+            //{
+            //    StatusCode = HttpStatusCode.Created,
+            //    Headers = {
+            //        {HttpHeaders.Location, base.Request.AbsoluteUri.CombineWith(newMovieId.ToString())}
+            //    }
+            //};
         }
 
         /// <summary>
         /// PUT /movies/{id}
         /// </summary>
-        public object Put(Product movie)
+        public object Put(Product product)
         {
-            Global.StaticMovieCatalog.Update(movie);
+            Global.StaticMovieCatalog.Update(product);
 
             return new HttpResult
             {
                 StatusCode = HttpStatusCode.NoContent,
                 Headers =
                 {
-                    {HttpHeaders.Location, this.Request.AbsoluteUri.CombineWith(movie.Id.ToString())}
+                    {HttpHeaders.Location, this.Request.AbsoluteUri.CombineWith(product.Id.ToString())}
                 }
             };
         }

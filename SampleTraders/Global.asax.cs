@@ -86,6 +86,7 @@ namespace SampleTraders
 
             public static void Save(Product movie)
             {
+                movie.Id = Movies.Max(x => x.Id) + 1;
                 Movies.Add(movie);
             }
 
