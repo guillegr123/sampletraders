@@ -46,7 +46,7 @@ namespace SampleTraders
         /// <summary>
         /// Gets or sets the movie.
         /// </summary>
-        public Product Movie { get; set; }
+        public Product Product { get; set; }
     }
 
     /// <summary>
@@ -67,9 +67,9 @@ namespace SampleTraders
     public class ProductsResponse
     {
         /// <summary>
-        /// Gets or sets the list of movies.
+        /// Gets or sets the list of products.
         /// </summary>
-        public List<Product> Movies { get; set; }
+        public List<Product> Products { get; set; }
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ namespace SampleTraders
         {
             return new ProductsResponse
             {
-                Movies = String.IsNullOrEmpty(request.Vendor)
+                Products = String.IsNullOrEmpty(request.Vendor)
                     ? Global.StaticMovieCatalog.GetAll()
                     : Global.StaticMovieCatalog.GetByVendor(request.Vendor)
             };
@@ -98,7 +98,7 @@ namespace SampleTraders
         {
             return new ProductResponse
             {
-                Movie = Global.StaticMovieCatalog.GetById(movie.Id),
+                Product = Global.StaticMovieCatalog.GetById(movie.Id),
             };
         }
 
@@ -116,7 +116,7 @@ namespace SampleTraders
 
             var newMovie = new ProductResponse
             {
-                Movie = Global.StaticMovieCatalog.GetById(newMovieId),
+                Product = Global.StaticMovieCatalog.GetById(newMovieId),
             };
 
             return new HttpResult(newMovie)
