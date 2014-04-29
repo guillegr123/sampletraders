@@ -358,7 +358,6 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="partials\list.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -372,6 +371,7 @@
     <Compile Include="App_Start\SampleTradersAppHost.cs" />
     <Compile Include="Data\IRepositoryProduct.cs" />
     <Compile Include="Data\IRepositoryVendor.cs" />
+    <Compile Include="Data\RepositoryProductInMemory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

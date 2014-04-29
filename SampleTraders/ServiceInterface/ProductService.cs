@@ -29,7 +29,7 @@ namespace SampleTraders.ServiceInterface
         /// GET /products
         /// GET /products/vendors/{Vendor}
         /// </summary>
-        public List<Product> Get(Products request)
+        public object Get(Products request)
         {
             //return new ProductsResponse
             //{
@@ -38,7 +38,10 @@ namespace SampleTraders.ServiceInterface
             //        : Global.StaticMovieCatalog.GetByVendor(request.Vendor)
             //};
 
-            return ProductRepository.GetAll();
+            return new ProductsResponse
+            {
+                Products = ProductRepository.GetAll()
+            };
         }
 
         /// <summary>
@@ -56,10 +59,20 @@ namespace SampleTraders.ServiceInterface
         /// Location: http://localhost/ServiceStack.MovieRest/movies/{newMovieId}
         /// {newMovie DTO in [xml|json|jsv|etc]}
         /// </summary>
-        public Product Post(Product product)
+        public object Post(Product product)
         {
             ProductRepository.Save(product);
-            return product;
+            var newProduct = new ProductResponse
+            {
+                Product = ProductRepository.GetById(product.Id),
+            };
+            return new HttpResult(newProduct)
+            {
+                StatusCode = HttpStatusCode.Created,
+                Headers = {
+                    {HttpHeaders.Location, base.Request.AbsoluteUri.CombineWith(product.Id.ToString())}
+                }
+            };
         }
 
         /// <summary>

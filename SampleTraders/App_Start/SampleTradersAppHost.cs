@@ -6,6 +6,7 @@ namespace ServiceStack.MovieRest.App_Start
 {
     using Funq;
     using SampleTraders;
+    using SampleTraders.Data;
     using SampleTraders.ServiceInterface;
     using ServiceStack.Common.Utils;
     using ServiceStack.OrmLite;
@@ -36,6 +37,7 @@ namespace ServiceStack.MovieRest.App_Start
             container.Register<IDbConnectionFactory>(
             c => new OrmLiteConnectionFactory("~/App_Data/db.sqlite".MapHostAbsolutePath(), SqliteOrmLiteDialectProvider.Instance));
             */
+            container.RegisterAutoWiredAs<RepositoryProductInMemory ,IRepositoryProduct>();
 
             /*
             // Reiniciar lista de películas

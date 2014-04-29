@@ -31,7 +31,11 @@
                     <td>{{p.name}}</td>
                     <td>{{p.vendor}}</td>
                     <td>{{p.qty}}</td>
-                    <td><button role='button' class='btn' ng-click="editProduct(p)" data-toggle="modal" href="#editModal">Edit</button></td>
+                    <td>
+                        <button role='button' class='btn' ng-click="edit(p)" data-toggle="modal" href="#editModal">Edit</button>
+                        &nbsp;
+                        <button role='button' class='btn btn-danger' ng-click="delete(p)">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
