@@ -15,6 +15,10 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', fun
         } else {
             Product.update({ id: product.id }, product, function (res) {
                 console.log(res);
+                $scope.originalProduct.id = res.id;
+                $scope.originalProduct.name = res.name;
+                $scope.originalProduct.vendor = res.vendor;
+                $scope.originalProduct.qty = res.qty;
             }, function (error) {
             });
         }
@@ -30,23 +34,30 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', fun
         });
     };
     $scope.edit = function (product) {
+        $scope.product_form.$setPristine();
         $scope.vendors = ['Vendor1', 'Vendor2'];
-
         if (product === 'new') {
             $scope.newProduct = true;
-            $scope.product = { id:null, name: '', vendor: '', qty: 0 };
+            $scope.product = { id: null, name: '', vendor: '', qty: 0 };
+            $scope.originalProduct = $scope.product;
         }
         else {
             $scope.newProduct = false;
-            $scope.product = product;
+            $scope.product = { id: product.id, name: product.name, vendor: product.vendor, qty: product.qty };
+            $scope.originalProduct = product;
         }
+    };
+    $scope.isUnchanged = function (product) {
+        return angular.equals(product, $scope.originalProduct);
     };
     $scope.upQty = function (product) {
         if (product.qty > 100000) return;
         product.qty = product.qty + 1
+        $scope.product_form.product_qty.$setViewValue($scope.product_form.product_qty.$viewValue);  //Setting field as dirty
     };
     $scope.downQty = function (product) {
         if (product.qty <= 0) return;
         product.qty = product.qty - 1
+        $scope.product_form.product_qty.$setViewValue($scope.product_form.product_qty.$viewValue);  //Setting field as dirty
     };
 }]);

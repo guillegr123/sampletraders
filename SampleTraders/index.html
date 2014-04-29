@@ -15,7 +15,7 @@
     </head>
     <body ng-controller="ProductListCtrl">
         <h3>Sample Traders' product catalog</h3>
-        <button class="btn btn-success" ng-click="editProduct('new')" data-toggle="modal" href="#editModal">
+        <button class="btn btn-success" ng-click="edit('new')" data-toggle="modal" href="#editModal">
         <i class="icon-calendar icon-white"></i>Add new product</button>
         <table class='table table-striped'>
             <thead>
@@ -39,6 +39,52 @@
                 </tr>
             </tbody>
         </table>
-        <div class="modal fade" ng-include="'partials/product-edit.html'" id="editModal" role='dialog'></div>
+
+        <!-- Modal for product edit - Begin -->
+        <div class="modal fade" id="editModal" role='dialog'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class='modal-header'>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h3 ng-hide='newProduct'>Edit Product: {{originalProduct.name}}</h3>
+                      <h3 ng-show='newProduct'>New Product</h3>
+                    </div>
+                    <form name="product_form" role="form" class="form-horizontal" novalidate>
+                        <div class='modal-body'>
+                            <div class="form-group ng-class:{'has-error':product_form.product_name.$dirty && product_form.product_name.$invalid};">
+                                <label class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type='text' name="product_name" class="form-control" ng-model="product.name" required/>
+                                </div>
+                            </div>
+                            <div class="form-group ng-class:{'has-error':product_form.product_vendor.$dirty && product_form.product_vendor.$invalid};">
+                                <label class="col-sm-2 control-label">Vendor</label>
+                                <div class="col-sm-10">
+                                    <select name="product_vendor" class="form-control" ng-model="product.vendor" ng-options="v for v in vendors" required></select>
+                                </div>
+                            </div>
+                            <div class="form-group ng-class:{'has-error':product_form.product_qty.$dirty && product_form.product_qty.$invalid};">
+                                <label class="col-sm-2 control-label">Quantity</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group spinner">
+                                        <input type="number" name="product_qty" class="form-control" ng-model="product.qty" required/>
+                                        <div class="input-group-btn-vertical">
+                                            <button class="btn btn-default" ng-click="upQty(product)"><i class="fa fa-caret-up"></i></button>
+                                            <button class="btn btn-default" ng-click="downQty(product)"><i class="fa fa-caret-down"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='button' class="btn" data-dismiss="modal">Cancel</button>
+                            <button type='button' class="btn btn-danger" data-dismiss="modal" ng-hide='newProduct' ng-click="delete(product)">Delete</button>
+                            <button type='submit' class="btn btn-primary" data-dismiss="modal" ng-disabled="product_form.$pristine || product_form.$invalid" ng-click="save(product)">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for product edit - End -->
     </body>
 </html>
