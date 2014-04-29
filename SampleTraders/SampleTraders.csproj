@@ -372,7 +372,6 @@
     <Compile Include="App_Start\SampleTradersAppHost.cs" />
     <Compile Include="Data\IRepositoryProduct.cs" />
     <Compile Include="Data\IRepositoryVendor.cs" />
-    <Compile Include="Data\Vendor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
