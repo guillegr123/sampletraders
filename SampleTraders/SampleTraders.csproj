@@ -370,11 +370,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SampleTradersAppHost.cs" />
+    <Compile Include="Data\IRepositoryProduct.cs" />
+    <Compile Include="Data\IRepositoryVendor.cs" />
+    <Compile Include="Data\Vendor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="ProductService.cs" />
+    <Compile Include="ServiceModel\ProductModels.cs" />
+    <Compile Include="ServiceInterface\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceModel\VendorModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

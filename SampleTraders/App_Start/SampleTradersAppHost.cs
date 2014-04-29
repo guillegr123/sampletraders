@@ -6,6 +6,7 @@ namespace ServiceStack.MovieRest.App_Start
 {
     using Funq;
     using SampleTraders;
+    using SampleTraders.ServiceInterface;
     using ServiceStack.Common.Utils;
     using ServiceStack.OrmLite;
     using ServiceStack.ServiceInterface.Cors;
