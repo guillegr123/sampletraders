@@ -379,9 +379,10 @@
     <Compile Include="Data\IRepositoryProduct.cs" />
     <Compile Include="Data\IRepositoryVendor.cs" />
     <Compile Include="Data\MongoDatabaseFactory.cs" />
-    <Compile Include="Data\RepositoryProductInMemory.cs" />
+    <Compile Include="Data\RepositoryMongoBase.cs" />
     <Compile Include="Data\RepositoryProductMongo.cs" />
     <Compile Include="Data\RepositoryVendorMongo.cs" />
+    <Compile Include="Extensions\ModelExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -6,4 +6,11 @@ sampleTradersServices.factory('Product', ['$resource',
             query: { method: 'GET', isArray: false },
             update: { method: 'PUT' }
         });
-}]);
+    }]);
+
+sampleTradersServices.factory('Vendor', ['$resource',
+    function ($resource) {
+        return $resource('vendors/', null, {
+            query: { method: 'GET', isArray: false }
+        });
+    }]);

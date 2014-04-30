@@ -1,10 +1,10 @@
 ﻿var sampleTradersControllers = angular.module('sampleTradersControllers', []);
 
-sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', function ($scope, Product) {
+sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', 'Vendor', function ($scope, Product, Vendor) {
     Product.query(function (res) {
         $scope.products = res.products;
         }, function (error) {
-            // Error handler code
+            window.alert('Error: Product list cannot be loaded.');
         });
     $scope.save = function (product) {
         console.log(product);
@@ -12,6 +12,7 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', fun
             Product.save(product, function (res) {
                 $scope.products.push(res.product);
             }, function (error) {
+                window.alert("Error: Product couldn't be created.");
             });
         } else {
             Product.update({ guid: product.guid }, product, function (res) {
@@ -21,6 +22,7 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', fun
                 $scope.originalProduct.vendor = res.vendor;
                 $scope.originalProduct.qty = res.qty;
             }, function (error) {
+                window.alert("Error: Product couldn't be updated.");
             });
         }
     };
@@ -30,26 +32,34 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', fun
             if (e.guid == product.guid) {
                 Product.delete({ guid: product.guid }, function () {
                     $scope.products.splice(index, 1);
+                }, function (error) {
+                    window.alert("Error: Product couldn't be deleted.");
                 });
             }
         });
     };
     $scope.edit = function (product) {
-        $scope.product_form.$setPristine();
-        $scope.vendors = ['Vendor1', 'Vendor2'];
-        if (product === 'new') {
-            $scope.newProduct = true;
-            $scope.product = { guid: null, name: '', vendor: '', qty: 0 };
-            $scope.originalProduct = $scope.product;
-        }
-        else {
-            $scope.newProduct = false;
-            $scope.product = { guid: product.guid, name: product.name, vendor: product.vendor, qty: product.qty };
-            $scope.originalProduct = product;
-        }
-    };
-    $scope.isUnchanged = function (product) {
-        return angular.equals(product, $scope.originalProduct);
+        Vendor.query(function (res) {
+            $scope.vendors = res.vendors;
+            $scope.product_form.$setPristine();
+            if (product === 'new') {
+                $scope.newProduct = true;
+                $scope.product = { guid: null, name: '', vendor: '', qty: 0 };
+                $scope.originalProduct = $scope.product;
+            }
+            else {
+                $scope.newProduct = false;
+                $scope.product = { guid: product.guid, name: product.name, vendor: null, qty: product.qty };
+                for (var i = 0; i < $scope.vendors.length; i++) {
+                    if ($scope.vendors[i].guid == product.vendor.guid) {
+                        $scope.product.vendor = $scope.vendors[i];
+                        break;
+                    }
+                }
+                $scope.originalProduct = product;
+            }
+        }, function (error) {
+        });
     };
     $scope.upQty = function (product) {
         if (product.qty > 100000) return;

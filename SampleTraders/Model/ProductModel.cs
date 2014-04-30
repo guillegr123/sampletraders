@@ -11,29 +11,9 @@ namespace SampleTraders.Model
     public class ProductModel
     {
         [BsonId]
-        [IgnoreDataMember]
-        public ObjectId Id { get; set; }
-        [BsonIgnore]
-        public string Guid
-        {
-            set
-            {
-                if (value != null)
-                {
-                    Id = ObjectId.Parse(value);
-                }
-                else
-                {
-                    Id = default(ObjectId);
-                }
-            }
-            get
-            {
-                return Id.ToString();
-            }
-        }
+        public ObjectId ProductId { get; set; }
         public string Name { get; set; }
         public int Qty { get; set; }
-        public string Vendor { get; set; }
+        public VendorModel Vendor { get; set; }
     }
 }

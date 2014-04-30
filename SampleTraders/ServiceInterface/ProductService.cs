@@ -12,6 +12,7 @@ using SampleTraders.Data;
 using SampleTraders.ServiceModel;
 using System.Linq;
 using SampleTraders.Model;
+using SampleTraders.Extensions.Model;
 
 namespace SampleTraders.ServiceInterface
 {
@@ -21,10 +22,12 @@ namespace SampleTraders.ServiceInterface
     public class ProductService : Service
     {
         private readonly IRepositoryProduct ProductRepository;
+        private readonly IRepositoryVendor VendorRepository;
 
-        public ProductService(IRepositoryProduct productRepository)
+        public ProductService(IRepositoryProduct productRepository, IRepositoryVendor vendorRepository)
         {
             ProductRepository = productRepository;
+            VendorRepository = vendorRepository;
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace SampleTraders.ServiceInterface
 
             return new ProductsResponse
             {
-                Products = ProductRepository.GetAll().Select(x => new Product(){ Guid = x.Id.ToString(), Name = x.Name, Qty = x.Qty, Vendor = x.Vendor }).ToList()
+                Products = ProductRepository.GetAll().Select(x => x.ToProduct()).ToList()
             };
         }
 
@@ -54,7 +57,7 @@ namespace SampleTraders.ServiceInterface
             ProductModel p = ProductRepository.GetById(product.Guid);
             return new ProductResponse
             {
-                Product = (Product)p
+                Product = p.ToProduct()
             };
         }
 
@@ -67,17 +70,20 @@ namespace SampleTraders.ServiceInterface
         /// </summary>
         public object Post(Product product)
         {
-            ProductRepository.Save(product);
-            ProductModel p = ProductRepository.GetById(product.Guid);
+            var vendorModel = VendorRepository.GetById(product.Vendor.Guid);
+            var productModel = product.ToProductModel(vendorModel);
+            ProductRepository.Save(productModel);
+            var p = ProductRepository.GetById(productModel.ProductId.ToString());
             var newProduct = new ProductResponse
             {
-                Product = (Product)p
+                Product = p.ToProduct()
             };
+
             return new HttpResult(newProduct)
             {
                 StatusCode = HttpStatusCode.Created,
                 Headers = {
-                    {HttpHeaders.Location, base.Request.AbsoluteUri.CombineWith(product.Id.ToString())}
+                    {HttpHeaders.Location, base.Request.AbsoluteUri.CombineWith(newProduct.Product.Guid)}
                 }
             };
         }
@@ -87,14 +93,15 @@ namespace SampleTraders.ServiceInterface
         /// </summary>
         public object Put(Product product)
         {
-            ProductRepository.Update(product);
+            var vendorModel = VendorRepository.GetById(product.Vendor.Guid);
+            ProductRepository.Update(product.ToProductModel(vendorModel));
 
             return new HttpResult
             {
                 StatusCode = HttpStatusCode.NoContent,
                 Headers =
                 {
-                    {HttpHeaders.Location, this.Request.AbsoluteUri.CombineWith(product.Id.ToString())}
+                    {HttpHeaders.Location, this.Request.AbsoluteUri.CombineWith(product.Guid)}
                 }
             };
         }
@@ -102,15 +109,15 @@ namespace SampleTraders.ServiceInterface
         /// <summary>
         /// DELETE /movies/{Id}
         /// </summary>
-        public object Delete(Product request)
+        public object Delete(Product product)
         {
-            ProductRepository.DeleteById(request.Guid);
+            ProductRepository.DeleteById(product.Guid);
 
             return new HttpResult
             {
                 StatusCode = HttpStatusCode.NoContent,
                 Headers = {
-                    {HttpHeaders.Location, this.Request.AbsoluteUri.CombineWith(request.Id.ToString())}
+                    {HttpHeaders.Location, this.Request.AbsoluteUri.CombineWith(product.Guid)}
                 }
             };
         }

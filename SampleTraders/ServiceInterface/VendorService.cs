@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SampleTraders.Extensions.Model;
 
 namespace SampleTraders.ServiceInterface
 {
@@ -24,7 +25,7 @@ namespace SampleTraders.ServiceInterface
         {
             return new VendorsResponse
             {
-                Products = VendorRepository.GetAll()
+                Vendors = VendorRepository.GetAll().Select(x => x.ToVendor()).ToList()
             };
         }
     }

@@ -29,7 +29,7 @@
             <tbody>
                 <tr ng-repeat='p in products'>
                     <td>{{p.name}}</td>
-                    <td>{{p.vendor}}</td>
+                    <td>{{p.vendor.name}}</td>
                     <td>{{p.qty}}</td>
                     <td>
                         <button role='button' class='btn' ng-click="edit(p)" data-toggle="modal" href="#editModal">Edit</button>
@@ -60,7 +60,7 @@
                             <div class="form-group ng-class:{'has-error':product_form.product_vendor.$dirty && product_form.product_vendor.$invalid};">
                                 <label class="col-sm-2 control-label">Vendor</label>
                                 <div class="col-sm-10">
-                                    <select name="product_vendor" class="form-control" ng-model="product.vendor" ng-options="v for v in vendors" required></select>
+                                    <select name="product_vendor" class="form-control" ng-model="product.vendor" ng-options="v.name for v in vendors" required></select>
                                 </div>
                             </div>
                             <div class="form-group ng-class:{'has-error':product_form.product_qty.$dirty && product_form.product_qty.$invalid};">

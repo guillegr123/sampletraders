@@ -34,11 +34,16 @@ namespace SampleTraders.ServiceModel
     /// Define ServiceStack web service product request (i.e. Request DTO).
     /// </summary>
     /// <remarks>The route is defined here rather than in the AppHost.</remarks>
-    [Api("GET or DELETE a single movie by Id. Use POST to create a new Movie and PUT to update it")]
+    [Api("GET or DELETE a single product by Guid. Use POST to create a new product and PUT to update it.")]
     [Route("/products", "POST,PUT,PATCH,DELETE")]
     [Route("/products/{Guid}")]
-    public class Product : ProductModel, IReturn<ProductResponse>
+    public class Product : IReturn<ProductResponse>
     {
+        public string Guid { get; set; }
+        public string Name { get; set; }
+        public int Qty { get; set; }
+        public Vendor Vendor { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the product.
         /// </summary>
@@ -52,9 +57,9 @@ namespace SampleTraders.ServiceModel
     /// Define ServiceStack web service products list request (i.e. Request DTO).
     /// </summary>
     /// <remarks>The route is defined here rather than in the AppHost.</remarks>
-    [Api("Find movies by genre, or all movies if no genre is provided")]
+    [Api("Get all products.")]
     [Route("/products", "GET, OPTIONS")]
-    [Route("/products/vendors/{Vendor}")]
+    //[Route("/products/vendors/{Vendor}")]
     public class Products : IReturn<ProductsResponse>
     {
         public string Vendor { get; set; }

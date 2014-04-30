@@ -1,4 +1,4 @@
-﻿using SampleTraders.ServiceModel;
+﻿using SampleTraders.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,7 @@ namespace SampleTraders.Data
 {
     public interface IRepositoryVendor
     {
-        List<Vendor> GetAll();
+        List<VendorModel> GetAll();
+        VendorModel GetById(string id);
     }
 }
