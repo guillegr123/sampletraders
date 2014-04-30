@@ -13,6 +13,7 @@ namespace ServiceStack.MovieRest.App_Start
     using ServiceStack.ServiceInterface.Cors;
     using ServiceStack.Text;
     using ServiceStack.WebHost.Endpoints;
+    using System.Configuration;
 
     public class SampleTradersAppHost
     : AppHostBase
@@ -37,7 +38,9 @@ namespace ServiceStack.MovieRest.App_Start
             container.Register<IDbConnectionFactory>(
             c => new OrmLiteConnectionFactory("~/App_Data/db.sqlite".MapHostAbsolutePath(), SqliteOrmLiteDialectProvider.Instance));
             */
-            container.RegisterAutoWiredAs<RepositoryProductInMemory ,IRepositoryProduct>();
+            container.Register<IMongoDBDatabaseFactory>(new MongoDatabaseFactory(ConfigurationManager.ConnectionStrings["main"].ConnectionString));
+            container.RegisterAutoWiredAs<RepositoryProductMongo ,IRepositoryProduct>();
+            container.RegisterAutoWiredAs<RepositoryVendorMongo, IRepositoryVendor>();
 
             /*
             // Reiniciar lista de películas

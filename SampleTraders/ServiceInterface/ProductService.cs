@@ -10,11 +10,13 @@ using ServiceStack.ServiceInterface;
 using ServiceStack.Text;
 using SampleTraders.Data;
 using SampleTraders.ServiceModel;
+using System.Linq;
+using SampleTraders.Model;
 
 namespace SampleTraders.ServiceInterface
 {
     /// <summary>
-    /// Create your ServiceStack restful web service implementation.
+    /// ServiceStack restful web service implementation.
     /// </summary>
     public class ProductService : Service
     {
@@ -40,16 +42,20 @@ namespace SampleTraders.ServiceInterface
 
             return new ProductsResponse
             {
-                Products = ProductRepository.GetAll()
+                Products = ProductRepository.GetAll().Select(x => new Product(){ Guid = x.Id.ToString(), Name = x.Name, Qty = x.Qty, Vendor = x.Vendor }).ToList()
             };
         }
 
         /// <summary>
         /// GET /movies/{Id}
         /// </summary>
-        public Product Get(Product product)
+        public ProductResponse Get(Product product)
         {
-            return ProductRepository.GetById(product.Id);
+            ProductModel p = ProductRepository.GetById(product.Guid);
+            return new ProductResponse
+            {
+                Product = (Product)p
+            };
         }
 
         /// <summary>
@@ -62,9 +68,10 @@ namespace SampleTraders.ServiceInterface
         public object Post(Product product)
         {
             ProductRepository.Save(product);
+            ProductModel p = ProductRepository.GetById(product.Guid);
             var newProduct = new ProductResponse
             {
-                Product = ProductRepository.GetById(product.Id),
+                Product = (Product)p
             };
             return new HttpResult(newProduct)
             {
@@ -97,7 +104,7 @@ namespace SampleTraders.ServiceInterface
         /// </summary>
         public object Delete(Product request)
         {
-            ProductRepository.DeleteById(request.Id);
+            ProductRepository.DeleteById(request.Guid);
 
             return new HttpResult
             {

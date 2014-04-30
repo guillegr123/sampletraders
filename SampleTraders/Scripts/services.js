@@ -2,7 +2,7 @@
 
 sampleTradersServices.factory('Product', ['$resource',
     function ($resource) {
-        return $resource('products/:id', null, {
+        return $resource('products/:guid', null, {
             query: { method: 'GET', isArray: false },
             update: { method: 'PUT' }
         });

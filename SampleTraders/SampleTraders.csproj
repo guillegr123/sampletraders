@@ -39,6 +39,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.0\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack">
       <HintPath>..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.dll</HintPath>
     </Reference>
@@ -63,6 +69,7 @@
     <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -368,12 +375,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SampleTradersAppHost.cs" />
+    <Compile Include="Data\IMongoDBDatabaseFactory.cs" />
     <Compile Include="Data\IRepositoryProduct.cs" />
     <Compile Include="Data\IRepositoryVendor.cs" />
+    <Compile Include="Data\MongoDatabaseFactory.cs" />
     <Compile Include="Data\RepositoryProductInMemory.cs" />
+    <Compile Include="Data\RepositoryProductMongo.cs" />
+    <Compile Include="Data\RepositoryVendorMongo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Model\ProductModel.cs" />
+    <Compile Include="Model\VendorModel.cs" />
+    <Compile Include="ServiceInterface\VendorService.cs" />
     <Compile Include="ServiceModel\ProductModels.cs" />
     <Compile Include="ServiceInterface\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿using SampleTraders.ServiceModel;
+﻿using SampleTraders.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ namespace SampleTraders.Data
 {
     public interface IRepositoryProduct
     {
-        List<Product> GetAll();
-        Product GetById(int id);
-        void Save(Product movie);
-        void Update(Product movie);
-        void DeleteById(int id);
+        List<ProductModel> GetAll();
+        ProductModel GetById(string id);
+        void Save(ProductModel product);
+        void Update(ProductModel product);
+        void DeleteById(string id);
     }
 }
