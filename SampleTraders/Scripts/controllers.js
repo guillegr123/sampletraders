@@ -7,7 +7,6 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', 'Ve
             window.alert('Error: Product list cannot be loaded.');
         });
     $scope.save = function (product) {
-        console.log(product);
         if (product.guid == null) {
             Product.save(product, function (res) {
                 $scope.products.push(res.product);
@@ -16,7 +15,6 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', 'Ve
             });
         } else {
             Product.update({ guid: product.guid }, product, function (res) {
-                console.log(res);
                 $scope.originalProduct.guid = res.guid;
                 $scope.originalProduct.name = res.name;
                 $scope.originalProduct.vendor = res.vendor;

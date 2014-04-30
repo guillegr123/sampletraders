@@ -32,7 +32,7 @@ namespace SampleTraders.ServiceInterface
 
         /// <summary>
         /// GET /products
-        /// GET /products/vendors/{Vendor}
+        /// GET /products/vendors/{vendorGuid}
         /// </summary>
         public object Get(Products request)
         {
@@ -50,7 +50,7 @@ namespace SampleTraders.ServiceInterface
         }
 
         /// <summary>
-        /// GET /movies/{Id}
+        /// GET /products/{guid}
         /// </summary>
         public ProductResponse Get(Product product)
         {
@@ -62,10 +62,10 @@ namespace SampleTraders.ServiceInterface
         }
 
         /// <summary>
-        /// POST /movies
+        /// POST /products
         /// returns HTTP Response =>
         /// 201 Created
-        /// Location: http://localhost/ServiceStack.MovieRest/movies/{newMovieId}
+        /// Location: http://localhost/products/{newProductGuid}
         /// {newMovie DTO in [xml|json|jsv|etc]}
         /// </summary>
         public object Post(Product product)
@@ -89,7 +89,7 @@ namespace SampleTraders.ServiceInterface
         }
 
         /// <summary>
-        /// PUT /movies/{id}
+        /// PUT /products/{guid}
         /// </summary>
         public object Put(Product product)
         {
@@ -107,7 +107,7 @@ namespace SampleTraders.ServiceInterface
         }
 
         /// <summary>
-        /// DELETE /movies/{Id}
+        /// DELETE /products/{Id}
         /// </summary>
         public object Delete(Product product)
         {

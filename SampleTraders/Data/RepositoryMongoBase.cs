@@ -44,8 +44,6 @@ namespace SampleTraders.Data
             return DataCollection.FindAll().ToList();
         }
 
-
-
         public TModel GetById(string id)
         {
             return DataCollection.FindOneById(ObjectId.Parse(id));
