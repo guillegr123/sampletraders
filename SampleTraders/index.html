@@ -15,8 +15,21 @@
     </head>
     <body ng-controller="ProductListCtrl">
         <h3>Sample Traders' product catalog</h3>
-        <button class="btn btn-success" ng-click="edit('new')" data-toggle="modal" href="#editModal">
-        <i class="icon-calendar icon-white"></i>Add new product</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-8">
+                    <button class="btn btn-success" ng-click="edit('new')" data-toggle="modal" href="#editModal">
+                        <i class="icon-calendar icon-white"></i>Add new product
+                    </button>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div class="filter">
+                        Filter by vendor:&nbsp;
+                        <select ng-model="displayedVendor" ng-options="v.name for v in vendorsFilter"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table class='table table-striped'>
             <thead>
                 <tr>
@@ -27,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='p in products'>
+                <tr ng-repeat='p in products | filter:filterEvent'>
                     <td>{{p.name}}</td>
                     <td>{{p.vendor.name}}</td>
                     <td>{{p.qty}}</td>

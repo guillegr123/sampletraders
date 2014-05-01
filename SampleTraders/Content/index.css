@@ -55,3 +55,7 @@ body {
     border-width: 8px 4px 0 4px;
     border-color: #000 transparent transparent;
 }
+/* Other */
+.filter {
+    float: right;
+}

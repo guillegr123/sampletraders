@@ -1,11 +1,20 @@
 ﻿var sampleTradersControllers = angular.module('sampleTradersControllers', []);
 
 sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', 'Vendor', function ($scope, Product, Vendor) {
+    var OpAllVendors = { guid: null, name: 'All' };
+    $scope.displayedVendor = OpAllVendors;
+    Vendor.query(function (res) {
+        $scope.vendorsFilter = res.vendors;
+        $scope.vendorsFilter.splice(0, 0, OpAllVendors);
+    }, function (res) {
+        $scope.vendorsFilter = [OpAllVendors];
+        window.alert("Error: Couldn't load vendor catalog.");
+    });
     Product.query(function (res) {
         $scope.products = res.products;
-        }, function (error) {
-            window.alert('Error: Product list cannot be loaded.');
-        });
+    }, function (error) {
+        window.alert('Error: Product list cannot be loaded.');
+    });
     $scope.save = function (product) {
         if (product.guid == null) {
             Product.save(product, function (res) {
@@ -57,6 +66,7 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', 'Ve
                 $scope.originalProduct = product;
             }
         }, function (error) {
+            window.alert("Error: Couldn't load vendor catalog.");
         });
     };
     $scope.upQty = function (product) {
@@ -68,5 +78,8 @@ sampleTradersControllers.controller('ProductListCtrl', ['$scope', 'Product', 'Ve
         if (product.qty <= 0) return;
         product.qty = product.qty - 1
         $scope.product_form.product_qty.$setViewValue($scope.product_form.product_qty.$viewValue);  //Setting field as dirty
+    };
+    $scope.filterEvent = function (value) {
+        return ($scope.displayedVendor.guid === null || value.vendor.guid === $scope.displayedVendor.guid);
     };
 }]);
