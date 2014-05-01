@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using ServiceStack.Common;
 using ServiceStack.Common.Web;
 using ServiceStack.DataAnnotations;

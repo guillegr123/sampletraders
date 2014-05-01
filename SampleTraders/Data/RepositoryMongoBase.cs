@@ -1,9 +1,8 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
+using MongoDB.Driver.Linq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SampleTraders.Data
 {
@@ -41,12 +40,7 @@ namespace SampleTraders.Data
 
         public List<TModel> GetAll()
         {
-            return DataCollection.FindAll().ToList();
-        }
-
-        public TModel GetById(string id)
-        {
-            return DataCollection.FindOneById(ObjectId.Parse(id));
+            return (from e in DataCollection.AsQueryable() select e).ToList();
         }
     }
 }

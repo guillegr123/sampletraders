@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using MongoDB.Driver.Linq;
 using SampleTraders.Model;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace SampleTraders.Data
         public RepositoryProductMongo(IMongoDBDatabaseFactory dbFactory)
             : base(dbFactory, "products")
         {
+        }
+
+        public ProductModel GetById(string id)
+        {
+            return DataCollection.AsQueryable().Single(x => x.ProductId == ObjectId.Parse(id));
         }
 
         public void Save(ProductModel product)

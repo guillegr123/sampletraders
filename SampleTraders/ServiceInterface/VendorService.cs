@@ -1,10 +1,7 @@
 ﻿using SampleTraders.Data;
 using SampleTraders.ServiceModel;
 using ServiceStack.ServiceInterface;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using SampleTraders.Extensions.Model;
 
 namespace SampleTraders.ServiceInterface

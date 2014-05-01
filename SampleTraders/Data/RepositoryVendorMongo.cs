@@ -1,8 +1,7 @@
 ﻿using SampleTraders.Model;
-using System;
-using System.Collections.Generic;
+using MongoDB.Driver.Linq;
+using MongoDB.Bson;
 using System.Linq;
-using System.Web;
 
 namespace SampleTraders.Data
 {
@@ -39,6 +38,11 @@ namespace SampleTraders.Data
                     Name = "Alaskan Dairy Products"
                 });
             }
+        }
+
+        public VendorModel GetById(string id)
+        {
+            return DataCollection.AsQueryable().Single(x => x.VendorId == ObjectId.Parse(id));
         }
     }
 }
